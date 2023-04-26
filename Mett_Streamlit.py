@@ -276,7 +276,7 @@ pages = {
 
 
 # Define app title and favicon
-st.set_page_config(page_title="Nudity AI Detector", page_icon=":camera:", layout="wide")
+st.set_page_config(page_title="Mett Hackaton", page_icon=":bar_chart:", layout="wide")
 
 # Create a function to run the selected page
 def run_app():
