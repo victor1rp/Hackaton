@@ -1,12 +1,12 @@
 
-import requests
-import json
 import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
+import altair as alt
 
-df = pd.read_excel("C:/Users/vikto/OneDrive - Stichting Hogeschool Utrecht/Block 2 Learning from data - Hackathon/Hackathon/Hackaton/MOCK_METT_final.xlsx")
+df = pd.read_csv("C:/Users/victo/Documents/GitHub/Hackaton/MOCK_METT_final.csv")
+
 
 #Changing type from object to datatime64 to date
 df['Date'] = pd.to_datetime(df['Date'])
@@ -17,6 +17,38 @@ df['Date'] = df['Date'].dt.date
 def Home():
     # Add code for home page
     st.title('Home Page')
+    st.header('Blogpost HU Website')
+    st.write('Lorem Epsum')
+    
+    
+def Blog():
+    # Add code for home page
+    st.title('Blog Page')
+    st.header('Blogpost HU Website')
+    st.write('Lorem Epsum')
+    if st.button('Website Admin'):
+            Blog_Analytic()
+    
+def Post():
+    # Add code for home page
+    st.title('Post Page')
+    st.header('Video Post HU Website')
+    st.write('Lorem Epsum')
+    if st.button('Community Manager'):
+            Post_Analytic
+
+def Survey():
+    # Add code for home page
+    st.title('Survey Page')
+    st.header('Survey HU Website')
+    st.write('Lorem Epsum')
+    if st.button('Co Creation Platform'):
+            Survey_Analytic     
+
+    
+def Blog_Analytic():
+    # Add code for home page
+    st.title('Blog Page')
     st.header('Blogpost HU Website')
     st.write('Lorem Epsum')
     st.markdown(
@@ -31,8 +63,121 @@ def Home():
          """,
          unsafe_allow_html=True
      )
+    
+def Post_Analytic():
+    # Add code for home page
+    st.title('Post Page')
+    st.header('Video Post HU Website')
+    st.write('Lorem Epsum')
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://imgur.com/a/W6hSkrZ");
+             background-attachment: fixed;
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+def Survey_Analytic():
+    # Add code for home page
+    st.title('Survey Page')
+    st.header('Survey HU Website')
+    st.write('Lorem Epsum')
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://imgur.com/a/W6hSkrZ");
+             background-attachment: fixed;
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )        
 
 
+def FAQ():
+    # Add code for home page
+    st.title('FAQ Page')
+    st.header("Helping you understand the KPI's")
+    # List of dictionaries containing variables, analytics, and examples
+    faq = [
+        {
+            "variable": "Time on Site",
+            "analytics": "Average time a visitor spends on the website",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Time on Site": [3.5, 4.2, 3.9]})
+        },
+        {
+            "variable": "Page Views",
+            "analytics": "Number of pages viewed by visitors",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Page Views": [100, 120, 90]})
+        },
+        {
+            "variable": "Form Submissions",
+            "analytics": "Number of forms submitted by visitors",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Form Submissions": [10, 15, 20]})
+        },
+        {
+            "variable": "Video Plays",
+            "analytics": "Number of times a video is played on the website",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Video Plays": [50, 60, 70]})
+        },
+        {
+            "variable": "Social Shares",
+            "analytics": "Number of times the website content is shared on social media",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Social Shares": [20, 25, 30]})
+        },
+        {
+            "variable": "Social Likes",
+            "analytics": "Number of times the website content is liked on social media",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Social Likes": [50, 70, 80]})
+        },
+        {
+            "variable": "Social Comments",
+            "analytics": "Number of comments made on the website content on social media",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Social Comments": [10, 15, 20]})
+        },
+        {
+            "variable": "Email Subscriptions", 
+            "analytics": "Number of visitors who subscribe to the email list",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Email Subscriptions": [5, 8, 10]})
+        },
+        {
+            "variable": "Bounce Rate",
+            "analytics": "Percentage of visitors who navigate away from the site after viewing only one page",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Bounce Rate": [0.6, 0.5, 0.7]})
+        },
+        {
+            "variable": "Visitors",
+            "analytics": "Total number of visitors to the website",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "Visitors": [100, 150, 200]})
+        },
+        {   "variable": "New Visitors",
+            "analytics": "Number of first-time visitors to the website",
+            "example": pd.DataFrame({"Month": ["Jan", "Feb", "Mar"], "New Visitors": [50, 75, 100]})
+        }
+    ]
+
+
+    # Loop through the faq list and create an expander widget for each question and answer pair
+    for item in faq:
+        with st.expander(f"{item['variable']} - {item['analytics']}"):
+            chart = alt.Chart(item['example']).mark_line().encode(
+                x='Month',
+                y=alt.Y(f'{item["variable"]}', title=f'{item["analytics"]}')
+            ).properties(
+                width=500,
+                height=300
+            )
+            st.altair_chart(chart)
+            st.write("Explanation:")
+            st.write(f"This graph shows the trend in {item['variable']} over time. The x-axis shows the time period, while the y-axis shows the value of the variable. In this case, the graph shows the trend in {item['variable']} over a period of time.")
+    
 # Basic Performance section
 def Basic():
     # Add code for user page
@@ -121,14 +266,17 @@ def Analysis():
 # Create a dictionary to store the pages
 pages = {
     'Home': Home,
-    'Basic': Basic,
-    'Origin': Origin,
-    'Trends': Trends,
-    'Analysis': Analysis
+    'Blog': Blog,
+    'Post': Post,
+    'Survey': Survey,
+    'FAQ': FAQ
 }
 
+
+
+
 # Define app title and favicon
-#st.set_page_config(page_title="Nudity AI Detector", page_icon=":camera:", layout="wide")
+st.set_page_config(page_title="Nudity AI Detector", page_icon=":camera:", layout="wide")
 
 # Create a function to run the selected page
 def run_app():
