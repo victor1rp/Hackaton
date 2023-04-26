@@ -55,9 +55,9 @@ def Basic():
     
     if basic_option == 'Today':
         basic_compare = 'Your overview of today is:'
-    elif basic_option == 'Past week':
+    elif basic_option == 'Last week':
         basic_compare = 'Your overview of Past week is:'
-    elif basic_option == 'Past month':
+    elif basic_option == 'Last month':
         basic_compare = 'Your overview of Past month is:'
     st.markdown(basic_compare)
         
@@ -69,43 +69,43 @@ def Basic():
         basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'].sum()
     elif basic_option == 'Last month':
         basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'].sum()
-    st.markdown(f'Total views: {basic_views}') #what is in between brackets is the variable, rest is text you want to show
+    st.markdown(f'Total page views: {basic_views}') #what is in between brackets is the variable, rest is text you want to show
+    #Make a trendline that shows daily overview of past week/past month
     
     
-    #Basic Performance Time Spent on site
+    #Basic Performance Time Spent on post
     if basic_option == 'Today':
-        basic_time = df.loc[df['Date'] == user_date, 'time_on_site'].iloc[0]
+        basic_time = round(df.loc[df['Date'] == user_date, 'time_on_site'].iloc[0]/basic_views)
     elif basic_option == 'Last week':
-        basic_time = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['time_on_site'].sum()
+        basic_time = round(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['time_on_site'].sum()/basic_views)
     elif basic_option == 'Last month':
-        basic_time = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['time_on_site'].sum()
-    st.markdown(f'Total Time spent on Site: {basic_time} seconds')
+        basic_time = round(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['time_on_site'].sum()/basic_views)
+    st.markdown(f'Average time spent on Post: {basic_time} seconds')
     
-    #Basic Performance Visitors
+    #Basic Performance Bounce Rate
     if basic_option == 'Today':
-        basic_visitors = df.loc[df['Date'] == user_date, 'visitors'].iloc[0]
+        basic_bounce = round(df.loc[df['Date'] == user_date, 'bounce_rate'].iloc[0]/100, 2)
     elif basic_option == 'Last week':
-        basic_visitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['visitors'].sum()
+        basic_bounce = round((df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['bounce_rate'].mean())/100, 2)
     elif basic_option == 'Last month':
-        basic_visitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['visitors'].sum()
-    st.markdown(f'Total Visitors on Site: {basic_visitors}')
+        basic_bounce = round((df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['bounce_rate'].mean())/100, 2)
+    st.markdown(f'Average Bounce Rate: {basic_bounce} %')
     
-    #Basic Performance New Visitors
+    #Basic Performance Total Shares
     if basic_option == 'Today':
-        basic_newvisitors = df.loc[df['Date'] == user_date, 'new_visitors'].iloc[0]
+        basic_shares = df.loc[df['Date'] == user_date, 'social_shares'].iloc[0]
     elif basic_option == 'Last week':
-        basic_newvisitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['new_visitors'].sum()
+        basic_shares = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_shares'].sum()
     elif basic_option == 'Last month':
-        basic_newvisitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['new_visitors'].sum()
-    st.markdown(f'Total new visitors on Site: {basic_newvisitors}')    
+        basic_shares = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_shares'].sum()
+    st.markdown(f'Total Shares: {basic_shares}')    
     
 #Top 5 KPI's for today (or maxbe adjustable time frame)
-#1 Page Views
-#2 Time spent on site
-#3 Visitors
-#4 New visitors
-#4 Engagement-Rate
-#5 Bounce-Rate
+#KPI: 
+##Pageviews: The number of times the post has been viewed by users 
+##Time Spent: The amount of time users spend reading the post 
+#Bounce Rate: The percentage of users who leave the website after reading the post 
+#Shares: The number of times the post has been shared on social media 
 
 # User Origin section
 def Origin():
@@ -140,7 +140,7 @@ def Analysis():
 # Create a dictionary to store the pages
 pages = {
     'Home': Home,
-    'Basic': Basic,
+    'Blog/Articles': Basic,
     'Origin': Origin,
     'Trends': Trends,
     'Analysis': Analysis
