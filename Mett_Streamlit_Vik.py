@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
 
-df = pd.read_excel("C:/Users/vikto/OneDrive - Stichting Hogeschool Utrecht/Block 2 Learning from data - Hackathon/Hackathon/Hackaton/MOCK_METT_final.xlsx")
+df = pd.read_csv("C:/Users/vikto/OneDrive - Stichting Hogeschool Utrecht/Block 2 Learning from data - Hackathon/Hackathon/Hackaton/MOCK_METT_final.csv", sep = ',')
 
 #Changing type from object to datatime64 to date
 df['Date'] = pd.to_datetime(df['Date'])
@@ -67,9 +67,14 @@ def Basic():
         basic_views = df.loc[df['Date'] == user_date, 'page_views'].iloc[0] #change basic_views variable and adjust 'page_views' column to one of your liking, same for other 2 basic_views variables
     elif basic_option == 'Last week':
         basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'].sum()
+        fig, ax = plt.subplots(figsize=(6,8))
+        ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)])
     elif basic_option == 'Last month':
         basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'].sum()
+        fig, ax = plt.subplots(figsize=(6,8))
+        ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)])
     st.markdown(f'Total page views: {basic_views}') #what is in between brackets is the variable, rest is text you want to show
+    st.pyplot(fig)
     #Make a trendline that shows daily overview of past week/past month
     
     
