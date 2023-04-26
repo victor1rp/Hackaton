@@ -65,9 +65,9 @@ def Basic():
     if basic_option == 'Today':
         basic_views = df.loc[df['Date'] == user_date, 'page_views'].iloc[0]
     elif basic_option == 'Last week':
-        basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(days=7)) & (df['Date'] <= user_date)]['page_views'].sum()
+        basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'].sum()
     elif basic_option == 'Last month':
-        basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(days=31)) & (df['Date'] <= user_date)]['page_views'].sum()
+        basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'].sum()
     st.markdown(f'Total views: {basic_views}')
     
     
@@ -75,17 +75,35 @@ def Basic():
     if basic_option == 'Today':
         basic_time = df.loc[df['Date'] == user_date, 'time_on_site'].iloc[0]
     elif basic_option == 'Last week':
-        basic_time = df.loc[(df['Date'] >= user_date - datetime.timedelta(days=7)) & (df['Date'] <= user_date)]['time_on_site'].iloc[0].sum()
+        basic_time = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['time_on_site'].sum()
     elif basic_option == 'Last month':
-        basic_time = df.loc[(df['Date'] >= user_date - datetime.timedelta(days=31)) & (df['Date'] <= user_date)]['time_on_site'].iloc[0].sum()
+        basic_time = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['time_on_site'].sum()
     st.markdown(f'Total Time spent on Site: {basic_time} seconds')
     
+    #Basic Performance Visitors
+    if basic_option == 'Today':
+        basic_visitors = df.loc[df['Date'] == user_date, 'visitors'].iloc[0]
+    elif basic_option == 'Last week':
+        basic_visitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['visitors'].sum()
+    elif basic_option == 'Last month':
+        basic_visitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['visitors'].sum()
+    st.markdown(f'Total Visitors on Site: {basic_visitors}')
+    
+    #Basic Performance New Visitors
+    if basic_option == 'Today':
+        basic_newvisitors = df.loc[df['Date'] == user_date, 'new_visitors'].iloc[0]
+    elif basic_option == 'Last week':
+        basic_newvisitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['new_visitors'].sum()
+    elif basic_option == 'Last month':
+        basic_newvisitors = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['new_visitors'].sum()
+    st.markdown(f'Total new visitors on Site: {basic_newvisitors}')    
     
 #Top 5 KPI's for today (or maxbe adjustable time frame)
 #1 Page Views
 #2 Time spent on site
-#3 Engagement-Rate
-#4 Visitors
+#3 Visitors
+#4 New visitors
+#4 Engagement-Rate
 #5 Bounce-Rate
 
 # User Origin section
