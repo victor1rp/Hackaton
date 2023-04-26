@@ -39,6 +39,7 @@ def Basic():
     st.title('Performance Overview')
     
     #Providing todays date
+    ##Copy/Paste from line 43 through 72
     datetime.datetime(2022, 11, 25)
     
     user_date = st.date_input("Select your Date",
@@ -54,21 +55,21 @@ def Basic():
     
     if basic_option == 'Today':
         basic_compare = 'Your overview of today is:'
-    elif basic_option == 'Last week':
-        basic_compare = 'Your overview of last week is:'
-    elif basic_option == 'Last month':
-        basic_compare = 'Your overview of last month is:'
+    elif basic_option == 'Past week':
+        basic_compare = 'Your overview of Past week is:'
+    elif basic_option == 'Past month':
+        basic_compare = 'Your overview of Past month is:'
     st.markdown(basic_compare)
         
     
     #Basic Performance Views
     if basic_option == 'Today':
-        basic_views = df.loc[df['Date'] == user_date, 'page_views'].iloc[0]
+        basic_views = df.loc[df['Date'] == user_date, 'page_views'].iloc[0] #change basic_views variable and adjust 'page_views' column to one of your liking, same for other 2 basic_views variables
     elif basic_option == 'Last week':
         basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'].sum()
     elif basic_option == 'Last month':
         basic_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'].sum()
-    st.markdown(f'Total views: {basic_views}')
+    st.markdown(f'Total views: {basic_views}') #what is in between brackets is the variable, rest is text you want to show
     
     
     #Basic Performance Time Spent on site
