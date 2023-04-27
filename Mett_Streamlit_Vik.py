@@ -147,7 +147,26 @@ def Basic():
                 plt.ylabel('Share count')
                 plt.xticks(rotation = 45)
                 st.pyplot(fig)
-        st.markdown(f'Total Shares: {basic_shares}')    
+        st.markdown(f'Total Shares: {basic_shares}') 
+        
+        # Implementing Bar chart overview for Today
+        with col2:
+            if basic_option == 'Today':
+                fig, ax = plt.subplots(figsize=(4,4))
+                x = ['Total views', 'Total shares']
+                y = [basic_views, basic_shares]
+                ax.bar(x, y)
+                st.pyplot(fig)
+        
+        # Summary overview
+        with col1:
+            if basic_option == 'Today':
+                st.title('Summary')
+                #Engagement rate below is calculated by dividing total shares by total views of today
+                basic_engage = round((basic_shares/basic_views)*100)
+                st.markdown(f'In summary today your Engagement rate is {basic_engage}%. Given your Target audience any rate above 30% is considered healhty.')
+                st.markdown('Wish to boost a specific KPI or get to understand how Engagement rate is calculated?')
+                st.markdown('Contact us for an appointment')
 
 
 # User Origin section
