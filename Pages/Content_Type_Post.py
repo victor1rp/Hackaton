@@ -54,6 +54,8 @@ def Post():
         st.markdown(':blue[Post]')
 
 
+# Define app title and favicon
+st.set_page_config(page_title="Mett Hackaton", page_icon=":bar_chart:", layout="wide")
 
 def run_app():
 

@@ -79,6 +79,9 @@ def FAQ():
             st.write("Explanation:")
             st.write(f"This graph shows the trend in {item['variable']} over time. The x-axis shows the time period, while the y-axis shows the value of the variable. In this case, the graph shows the trend in {item['variable']} over a period of time.")
 
+# Define app title and favicon
+st.set_page_config(page_title="Mett Hackaton", page_icon=":bar_chart:", layout="wide")
+
 def run_app():
 
     FAQ()

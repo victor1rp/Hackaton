@@ -123,6 +123,8 @@ def Blog():
     with col7:
         st.markdown('&nbsp;&nbsp;&nbsp;454')       
 
+# Define app title and favicon
+st.set_page_config(page_title="Mett Hackaton", page_icon=":bar_chart:", layout="wide")
 
 def run_app():
 
