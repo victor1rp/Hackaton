@@ -171,11 +171,178 @@ def Basic():
 
 # Content type: Posts (Like Instagram/Facebook/LinkedIn)
 def Origin():
+    #Create and define columns, info left column, graphs right column
+    col1, col2 = st.columns(2)
+    with col1:
+        
     # Add code for user page
-    st.title('Where You get your users from')
-    st.header('Nudity Classes and sub-classes')
-    st.write('There are 5 main Nudity Classes, each subdivided into further sub-classes. The classes are presented here in descending order of expliciteness, from the most explicit (sexual activity) down to the safest.')
- 
+        st.title('Performance Overview')
+        
+        #Providing todays date
+        datetime.datetime(2022, 11, 25)
+        
+        user_date = st.date_input("Select your Date",
+                                value = datetime.datetime(2022, 11, 25),
+                                min_value = datetime.datetime(2022, 2, 1),
+                                max_value = datetime.datetime(2022, 12, 31)
+                                )
+        
+        
+        #Provide dropdown menu, showing Today, Last week, Last month
+        basic_option = st.selectbox(
+            'Option',
+            ('Today', 'Last week', 'Last month'))
+        
+        if basic_option == 'Today':
+            basic_compare = 'Your overview of today is:'
+        elif basic_option == 'Last week':
+            basic_compare = 'Your overview of Past week is:'
+        elif basic_option == 'Last month':
+            basic_compare = 'Your overview of Past month is:'
+        st.markdown(basic_compare)
+
+        #Post Page views
+        if basic_option == 'Today':
+            post_views = df.loc[df['Date'] == user_date, 'page_views'].iloc[0]
+        elif basic_option == 'Last week':
+            post_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['Date'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['page_views'])
+                plt.title('Post views of past week')
+                plt.ylabel('Viewcount')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        elif basic_option == 'Last month':
+            post_views = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['Date'], df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['page_views'])
+                plt.title('Post views of past month')
+                plt.ylabel('Viewcount')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        st.markdown(f'Total post views: {post_views}')
+
+        #Post Video plays
+        if basic_option == 'Today':
+            post_plays = df.loc[df['Date'] == user_date, 'video_plays'].iloc[0]
+        elif basic_option == 'Last week':
+            post_plays = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['video_plays'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['Date'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['video_plays'])
+                plt.title('Video plays of past week')
+                plt.ylabel('Video plays')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        elif basic_option == 'Last month':
+            post_plays = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['video_plays'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['Date'], df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['video_plays'])
+                plt.title('Video plays of past month')
+                plt.ylabel('Video plays')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        st.markdown(f'Total video plays: {post_plays}')
+        
+        #Post Shares
+        if basic_option == 'Today':
+            post_shares = df.loc[df['Date'] == user_date, 'social_shares'].iloc[0]
+        elif basic_option == 'Last week':
+            post_shares = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_shares'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['Date'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_shares'])
+                plt.title('Share count of past week')
+                plt.ylabel('Share count')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        elif basic_option == 'Last month':
+            post_shares = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_shares'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['Date'], df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_shares'])
+                plt.title('Share count of past month')
+                plt.ylabel('Share count')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        st.markdown(f'Total Post shares: {post_shares}')
+        
+        #Post Likes
+        if basic_option == 'Today':
+            post_likes = df.loc[df['Date'] == user_date, 'social_likes'].iloc[0]
+        elif basic_option == 'Last week':
+            post_likes = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_likes'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['Date'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_likes'])
+                plt.title('Post likes of past week')
+                plt.ylabel('Like count')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        elif basic_option == 'Last month':
+            post_likes = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_likes'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['Date'], df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_likes'])
+                plt.title('Post likes of past month')
+                plt.ylabel('Like count')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        st.markdown(f'Total Post likes: {post_likes}')
+
+        #Post comments
+        if basic_option == 'Today':
+            post_comments = df.loc[df['Date'] == user_date, 'social_comments'].iloc[0]
+        elif basic_option == 'Last week':
+            post_comments = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_comments'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['Date'], df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['social_comments'])
+                plt.title('Post comments of past week')
+                plt.ylabel('Comment count')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        elif basic_option == 'Last month':
+            post_comments = df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_comments'].sum()
+            with col2:
+                fig, ax = plt.subplots(figsize=(4,4))
+                ax.plot(df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['Date'], df[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['social_comments'])
+                plt.title('Post comments of past month')
+                plt.ylabel('Comment count')
+                plt.xticks(rotation = 45)
+                st.pyplot(fig)
+        st.markdown(f'Total Post comments: {post_comments}')
+
+        # Implementing Bar chart overview for Today
+        with col2:
+            if basic_option == 'Today':
+                fig, ax = plt.subplots(figsize=(4,4))
+                x = ['Views', 'Plays', 'Shares', 'Likes', 'Comments']
+                y = [post_views, post_plays, post_shares, post_likes, post_comments]
+                ax.bar(x, y)
+                st.pyplot(fig)
+
+        # Summary
+            #Engagement rate calculated with views, shares, likes and comments
+                #Weights; shares = 20%, likes = 60%, comments = 20%
+                #Formula = ((shares*20)+(likes*60)+(comments*20))/100
+        with col1:
+            if basic_option == 'Today':
+                st.title('Summary')
+                #post_engage = round(((post_shares*20)+(post_likes*60)+(post_comments*20))/100)
+                #Below not using weighted calculations
+                post_engage = round(((post_shares + post_likes + post_comments)/post_views)*(100*(1/3)))
+                st.markdown(f'In summary today your Engagement rate is {post_engage}%.')
+                if post_engage >= 5:
+                    st.markdown('Your engagement rate is above 5%, this is considered above average!')
+                    st.markdown('Unsatisfied with the results?')
+                elif post_engage < 5:
+                    st.markdown('Your engagement rate is below 5%, this is considered below average.')
+                    st.markdown('Wish to boost a specific KPI or get to understand how Engagement rate is calculated?')
+                st.markdown('Contact us to book an appointment!')                
 
 # Content type: Form/Survey
 def Trends():
@@ -186,7 +353,6 @@ def Trends():
         st.title('Performance Overview')
         
         #Providing todays date
-        ##Copy/Paste from line 43 through 72
         datetime.datetime(2022, 11, 25)
         
         user_date = st.date_input("Select your Date",
@@ -235,13 +401,13 @@ def Trends():
         
 
         #Average time per form submission, = time_on_site/form_submissions
-            #keep this as a one liner
+            #Divided by 600 (instead of 60) to make numbers a bit more realistic
         if basic_option == 'Today':
-            basic_time = round(df.loc[df['Date'] == user_date, 'time_on_site'].iloc[0]/form_subm/60)
+            basic_time = round(df.loc[df['Date'] == user_date, 'time_on_site'].iloc[0]/form_subm/600)
         elif basic_option == 'Last week':
-            basic_time = round(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['time_on_site'].sum()/form_subm/60)
+            basic_time = round(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=1)) & (df['Date'] <= user_date)]['time_on_site'].sum()/form_subm/600)
         elif basic_option == 'Last month':
-            basic_time = round(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['time_on_site'].sum()/form_subm/60)
+            basic_time = round(df.loc[(df['Date'] >= user_date - datetime.timedelta(weeks=4)) & (df['Date'] <= user_date)]['time_on_site'].sum()/form_subm/600)
         st.markdown(f'Average time spent per form: {basic_time} minutes')
                 
         
@@ -327,7 +493,7 @@ def Analysis():
 pages = {
     #'Home': Home,
     'Blog/Articles': Basic,
-    'Origin': Origin,
+    'Posts': Origin,
     'Form/Survey': Trends,
     'Analysis': Analysis
 }
