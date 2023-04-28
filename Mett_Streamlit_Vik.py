@@ -327,14 +327,10 @@ def Origin():
 
         # Summary
             #Engagement rate calculated with views, shares, likes and comments
-                #Weights; shares = 20%, likes = 60%, comments = 20%
-                #Formula = ((shares*20)+(likes*60)+(comments*20))/100
         with col1:
             if basic_option == 'Today':
                 st.title('Summary')
-                #post_engage = round(((post_shares*20)+(post_likes*60)+(post_comments*20))/100)
-                #Below not using weighted calculations
-                post_engage = round(((post_shares + post_likes + post_comments)/post_views)*(100*(1/3)))
+                post_engage = round((((post_shares*1)+(post_likes*3)+(post_comments*1))/post_views)*100)
                 st.markdown(f'In summary today your Engagement rate is {post_engage}%.')
                 if post_engage >= 5:
                     st.markdown('Your engagement rate is above 5%, this is considered above average!')
