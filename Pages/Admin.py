@@ -16,8 +16,12 @@ df = df.sort_values(by = 'Date')
 
     
 def Blog_Analytic():
-    # Add code for home page
-    st.title('Blog Analytic')
+    # Add code for blog page
+    col1, col2 = st.columns([4,1])
+    with col1:
+        st.title('Blog Analytic')
+    with col2:
+        st.button('Export Data')
     #Create and define columns, info left column, graphs right column
     col1, col2 = st.columns(2)
     with col1:
@@ -144,7 +148,7 @@ def Blog_Analytic():
         with col1:
             if basic_option == 'Today':
                 st.title('Summary')
-                #Engagement rate below is calculated by dividing total shares by total views of today
+                #Engagement rate below by weighting the share more
                 basic_engage = round((basic_shares/basic_views)*100)
                 st.markdown(f'In summary today your Engagement rate is {basic_engage}%. Given your **Blog Content Type** any rate above 10% is considered above average.')
                 st.markdown('Wish to boost a specific KPI or get to understand how Engagement rate is calculated?')
@@ -153,7 +157,11 @@ def Blog_Analytic():
     
 def Post_Analytic():
     # Add code for home page
-    st.title('Post Analytic')
+    col1, col2 = st.columns([4,1])
+    with col1:   
+        st.title('Post Analytic')
+    with col2:
+        st.button('Export Data')
     #Create and define columns, info left column, graphs right column
     col1, col2 = st.columns(2)
     with col1:
@@ -325,9 +333,9 @@ def Post_Analytic():
         with col1:
             if basic_option == 'Today':
                 st.title('Summary')
-                #Engagement rate below is calculated by dividing total shares by total views of today
-                basic_engage = round((basic_shares/basic_views)*100)
-                st.markdown(f'In summary today your **Community Engagement** rate is {basic_engage}%. Given your **Post Content Type** any rate above 10% is considered above average.')
+                #Engagement rate below is calculated by by weighing likes more than shares and comments 
+                basic_engage = ((basic_shares) + (basic_likes * 2) + (basic_comments)) /4
+                st.markdown(f'In summary today your **Community Engagement** rate is {basic_engage}%. Given your **Post Content Type** any rate above 50% is considered above average.')
                 st.markdown('Wish to boost a specific KPI or get to understand how Engagement rate is calculated?')
                 st.markdown(':blue[Contact] us to book an appointment!')
                 #Improvements, perhaps do a scale of 1-5 of how good engagement is?
@@ -335,7 +343,12 @@ def Post_Analytic():
 
 def Survey_Analytic():
     # Add code for home page
-    st.title('User Engagment')
+    col1, col2 = st.columns([4,1])
+    with col1:   
+        st.title('User Engagment')
+    with col2:
+        st.button('Export Data')
+    
     #Create and define columns, info left column, graphs right column
     col1, col2 = st.columns(2)
     with col1:
@@ -465,7 +478,8 @@ def Survey_Analytic():
         with col1:
             if basic_option == 'Today':
                 st.title('Summary')
-                form_engage = round((form_sub/(form_subm + form_share))*100)
+                #Weighing the forms submission and shares more
+                form_engage = ((form_sub) + (form_subm * 2) + (form_share * 2))/5
                 st.markdown(f'In summary today your Engagement rate is {form_engage}%.')
                 if form_engage >= 5:
                     st.markdown('Your engagement rate is above 5%, this is considered above average!')
